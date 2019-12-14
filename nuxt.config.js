@@ -1,0 +1,81 @@
+const pkg = require("./package");
+
+module.exports = {
+  mode: "universal",
+
+  /*
+   ** Headers of the page
+   */
+  head: {
+    title: pkg.name,
+    meta: [
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: pkg.description }
+    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+  },
+
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: "#fff" },
+
+  /*
+   ** Global CSS
+   */
+  css: [
+    "element-ui/lib/theme-chalk/reset.css",
+    "element-ui/lib/theme-chalk/index.css",
+    "~assets/css/main.css"
+  ],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: [
+    // '@/plugins/element-ui'
+    { src: "@/plugins/element-ui", ssr: false }
+  ],
+
+  /*
+   ** Nuxt.js modules
+   */
+  modules: [
+    '@nuxtjs/axios'
+  ],
+  axios:{
+    
+  },
+
+  /*
+   ** Build configuration
+   */
+  build: {
+    transpile: [/^element-ui/],
+
+    /*
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {
+      const path = require("path");
+
+      module.exports = {
+        entry: "./es6-01/src/main.js",
+        output: {
+          filename: "bulid.js",
+          path: __dirname + "/es6-01/dist/"
+        },
+        module: {
+          rules: [
+            {
+              test: /\.js$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [{ loader: "babel-loader" }]
+            }
+          ]
+        }
+      };
+    }
+  }
+};
